@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Display</title>
+</head>
+<body>
+    <h1>Decrypted Message</h1>
+    <p>{{ message }}</p>  
+</body>
+</html>
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Display</title>
+</head>
+<body>
+    <h1>Decrypted Message Log on Server</h1>
+    
+    {% if message_log %}
+        <table border="1">
+            <tr>
+                <th>Decrypted Message</th>
+                <th>IP Address</th>
+                <th>MAC Address</th>
+                <th>Received Time</th>
+            </tr>
+            {% for entry in message_log %}
+                <tr>
+                    <td>{{ entry.decrypted_message }}</td>
+                    <td>{{ entry.client_ip }}</td>
+                    <td>{{ entry.client_mac }}</td>
+                    <td>{{ entry.received_time }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No messages received yet.</p>
+    {% endif %}
+    
+    <hr>
+    <p><strong>Server is listening for messages...</strong></p>
+</body>
+</html> -->

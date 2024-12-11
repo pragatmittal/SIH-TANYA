@@ -1,0 +1,1794 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #555;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #888;
+        }
+
+        .message-table {
+            overflow-x: auto;
+        }
+
+        .timestamp {
+            font-style: italic;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Decrypted Message Log on Server</h1>
+        
+        {% if message_log %}
+            <div class="message-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Decrypted Message</th>
+                            <th>IP Address</th>
+                            <th>MAC Address</th>
+                            <th>Received Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in message_log %}
+                            <tr>
+                                <td>{{ entry.decrypted_message }}</td>
+                                <td>{{ entry.client_ip }}</td>
+                                <td>{{ entry.client_mac }}</td>
+                                <td class="timestamp">{{ entry.received_time }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="empty-message"><strong>No messages received yet.</strong></p>
+        {% endif %}
+    </div>
+
+    <div class="footer">
+        <p><strong>Server is listening for messages...</strong></p>
+    </div>
+
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decrypted Messages Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .message-card {
+            margin: 10px 0;
+        }
+        .card-header {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+        .card-body {
+            font-size: 1.1rem;
+        }
+        .message-info {
+            font-size: 0.9rem;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Decrypted Messages Dashboard</h2>
+
+    <div class="row">
+        {% for message in message_log %}
+        <div class="col-md-4">
+            <div class="card message-card">
+                <div class="card-header bg-primary text-white">
+                    Message from {{ message.client_ip }}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Decrypted Message:</h5>
+                    <p class="card-text">{{ message.decrypted_message }}</p>
+                    <div class="message-info">
+                        <p><strong>Received At:</strong> {{ message.received_time }}</p>
+                        <p><strong>Client MAC:</strong> {{ message.client_mac }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="./server.css">
+    <title>SecuSwitch</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap'); 
+ 
+ * { 
+  font-family: 'Open Sans', sans-serif; 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+ } 
+  
+ :root { 
+  --grey: #F1F0F6; 
+  --dark-grey: #8D8D8D; 
+  --light: #fff; 
+  --dark: #000; 
+  --green: #81D43A; 
+  --light-green: #E3FFCB; 
+  --blue: #1775F1; 
+  --light-blue: #D0E4FF; 
+  --dark-blue: #0C5FCD; 
+  --red: #FC3B56; 
+ } 
+  
+ html { 
+  overflow-x: hidden; 
+ } 
+  
+ body { 
+  background: var(--grey); 
+  overflow-x: hidden; 
+ } 
+  
+ a { 
+  text-decoration: none; 
+ } 
+  
+ li { 
+  list-style: none; 
+ } 
+  
+  
+  
+ /* SIDEBAR */ 
+ #sidebar { 
+  position: fixed; 
+  max-width: 260px; 
+  width: 100%; 
+  background: var(--light); 
+  top: 0; 
+  left: 0; 
+  height: 100%; 
+  overflow-y: auto; 
+  scrollbar-width: none; 
+  transition: all .3s ease; 
+  z-index: 200; 
+ } 
+  
+ #sidebar.hide { 
+  max-width: 60px; 
+ } 
+  
+ #sidebar.hide:hover { 
+  max-width: 260px; 
+ } 
+  
+ #sidebar::-webkit-scrollbar { 
+  display: none; 
+ } 
+  
+ #sidebar .brand { 
+  font-size: 24px; 
+  display: flex; 
+  align-items: center; 
+  height: 64px; 
+  font-weight: 700; 
+  color: var(--blue); 
+  position: sticky; 
+  top: 0; 
+  left: 0; 
+  z-index: 100; 
+  background: var(--light); 
+  transition: all .3s ease; 
+  padding: 0 6px; 
+ } 
+  
+ #sidebar .icon { 
+  min-width: 48px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  margin-right: 6px; 
+ } 
+  
+ #sidebar .icon-right { 
+  margin-left: auto; 
+  transition: all .3s ease; 
+ } 
+  
+ #sidebar .side-menu { 
+  margin: 36px 0; 
+  padding: 0 20px; 
+  transition: all .3s ease; 
+ } 
+  
+ #sidebar.hide .side-menu { 
+  padding: 0 6px; 
+ } 
+  
+ #sidebar.hide:hover .side-menu { 
+  padding: 0 20px; 
+ } 
+  
+ #sidebar .side-menu a { 
+  display: flex; 
+  align-items: center; 
+  font-size: 14px; 
+  color: var(--dark); 
+  padding: 12px 16px 12px 0; 
+  transition: all .3s ease; 
+  border-radius: 10px; 
+  margin: 4px 0; 
+  white-space: nowrap; 
+ } 
+  
+ #sidebar .side-menu > li > a:hover { 
+  background: var(--grey); 
+ } 
+  
+ #sidebar .side-menu > li > a.active .icon-right { 
+  transform: rotateZ(90deg); 
+ } 
+  
+ #sidebar .side-menu > li > a.active, 
+ #sidebar .side-menu > li > a.active:hover { 
+  background: var(--blue); 
+  color: var(--light); 
+ } 
+  
+ #sidebar .divider { 
+  margin-top: 24px; 
+  font-size: 12px; 
+  text-transform: uppercase; 
+  font-weight: 700; 
+  color: var(--dark-grey); 
+  transition: all .3s ease; 
+  white-space: nowrap; 
+ } 
+  
+ #sidebar.hide:hover .divider { 
+  text-align: left; 
+ } 
+  
+ #sidebar.hide .divider { 
+  text-align: center; 
+ } 
+  
+ #sidebar .side-dropdown { 
+  padding-left: 54px; 
+  max-height: 0; 
+  overflow-y: hidden; 
+  transition: all .15s ease; 
+ } 
+  
+ #sidebar .side-dropdown.show { 
+  max-height: 1000px; 
+ } 
+  
+ #sidebar .side-dropdown a:hover { 
+  color: var(--blue); 
+ } 
+  
+ #sidebar .ads { 
+  width: 100%; 
+  padding: 20px; 
+ } 
+  
+ #sidebar.hide .ads { 
+  display: none; 
+ } 
+  
+ #sidebar.hide:hover .ads { 
+  display: block; 
+ } 
+  
+ #sidebar .ads .wrapper { 
+  background: var(--grey); 
+  padding: 20px; 
+  border-radius: 10px; 
+ } 
+  
+ #sidebar .btn-upgrade { 
+  font-size: 14px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  padding: 12px 0; 
+  color: var(--light); 
+  background: var(--blue); 
+  transition: all .3s ease; 
+  border-radius: 5px; 
+  font-weight: 600; 
+  margin-bottom: 12px; 
+ } 
+  
+ #sidebar .btn-upgrade:hover { 
+  background: var(--dark-blue); 
+ } 
+  
+ #sidebar .ads .wrapper p { 
+  font-size: 12px; 
+  color: var(--dark-grey); 
+  text-align: center; 
+ } 
+  
+ #sidebar .ads .wrapper p span { 
+  font-weight: 700; 
+ } 
+ /* SIDEBAR */ 
+  
+  
+  
+ /* CONTENT */ 
+ #content { 
+  position: relative; 
+  width: calc(100% - 260px); 
+  left: 260px; 
+  transition: all .3s ease; 
+ } 
+  
+ #sidebar.hide + #content { 
+  width: calc(100% - 60px); 
+  left: 60px; 
+ } 
+ /* NAVBAR */ 
+ nav { 
+  background: var(--light); 
+  height: 64px; 
+  padding: 0 20px; 
+  display: flex; 
+  align-items: center; 
+  grid-gap: 28px; 
+  position: sticky; 
+  top: 0; 
+  left: 0; 
+  z-index: 100; 
+ } 
+  
+ nav .toggle-sidebar { 
+  font-size: 18px; 
+  cursor: pointer; 
+ } 
+  
+ nav form { 
+  max-width: 400px; 
+  width: 100%; 
+  margin-right: auto; 
+ } 
+  
+ nav .form-group { 
+  position: relative; 
+ } 
+  
+ 
+  
+ nav .form-group input { 
+  width: 100%; 
+  background: var(--grey); 
+  border-radius: 5px; 
+  border: none; 
+  outline: none; 
+  padding: 10px 36px 10px 16px; 
+  transition: all .3s ease; 
+ } 
+  
+ nav .form-group input:focus { 
+  box-shadow: 0 0 0 1px var(--blue), 0 0 0 4px var(--light-blue); 
+ } 
+  
+ nav .form-group .icon { 
+  position: absolute; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  right: 16px; 
+  color: var(--dark-grey); 
+ } 
+  
+ nav .nav-link { 
+  position: relative; 
+ } 
+  
+ nav .nav-link .icon { 
+  font-size: 18px; 
+  color: var(--dark); 
+ } 
+  
+ nav .nav-link .badge { 
+  position: absolute; 
+  top: -12px; 
+  right: -12px; 
+  width: 20px; 
+  height: 20px; 
+  border-radius: 50%; 
+  border: 2px solid var(--light); 
+  background: var(--red); 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  color: var(--light); 
+  font-size: 10px; 
+  font-weight: 700; 
+ } 
+  
+ nav .divider { 
+  width: 1px; 
+  background: var(--grey); 
+  height: 12px; 
+  display: block; 
+ } 
+  
+ nav .profile { 
+  position: relative; 
+ } 
+  
+ nav .profile img { 
+  width: 36px; 
+  height: 36px; 
+  border-radius: 50%; 
+  object-fit: cover; 
+  cursor: pointer; 
+ } 
+  
+ nav .profile .profile-link { 
+  position: absolute; 
+  top: calc(100% + 10px); 
+  right: 0; 
+  background: var(--light); 
+  padding: 10px 0; 
+  box-shadow: 4px 4px 16px rgba(0, 0, 0, .1); 
+  border-radius: 10px; 
+  width: 160px; 
+  opacity: 0; 
+  pointer-events: none; 
+  transition: all .3s ease; 
+ } 
+  
+ nav .profile .profile-link.show { 
+  opacity: 1; 
+  pointer-events: visible; 
+  top: 100%; 
+ } 
+  
+ nav .profile .profile-link a { 
+  padding: 10px 16px; 
+  display: flex; 
+  grid-gap: 10px; 
+  font-size: 14px; 
+  color: var(--dark); 
+  align-items: center; 
+  transition: all .3s ease; 
+ } 
+  
+ nav .profile .profile-link a:hover { 
+  background: var(--grey); 
+ } 
+ /* NAVBAR */ 
+  
+  
+  
+ /* MAIN */ 
+ main { 
+  width: 100%; 
+  padding: 24px 20px 20px 20px; 
+ } 
+  
+ main .title { 
+  font-size: 28px; 
+  font-weight: 600; 
+  margin-bottom: 10px; 
+ } 
+  
+ main .breadcrumbs { 
+  display: flex; 
+  grid-gap: 6px; 
+ } 
+  
+ main .breadcrumbs li, 
+ main .breadcrumbs li a { 
+  font-size: 14px; 
+ } 
+  
+ main .breadcrumbs li a { 
+  color: var(--blue); 
+ } 
+  
+ main .breadcrumbs li a.active, 
+ main .breadcrumbs li.divider { 
+  color: var(--dark-grey); 
+  pointer-events: none; 
+ } 
+  
+ main .info-data { 
+  margin-top: 36px; 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+  grid-gap: 20px; 
+ } 
+  
+ main .info-data .card { 
+  padding: 20px; 
+  border-radius: 10px; 
+  background: var(--light); 
+  box-shadow: 4px 4px 16px rgba(0, 0, 0, .05); 
+ } 
+  
+ main .card .head { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: flex-start; 
+ } 
+  
+ main .card .head h2 { 
+  font-size: 18px; 
+  font-weight: 600; 
+  color: var(--dark); 
+ } 
+  
+ main .card .head a { 
+  color: var(--blue); 
+  font-size: 14px; 
+ } 
+  
+ main .card .head a:hover { 
+  color: var(--dark-blue); 
+ } 
+  
+ main .card .body { 
+  padding: 16px 0; 
+  display: grid; 
+  grid-template-columns: repeat(4, 1fr); 
+  grid-gap: 10px; 
+ } 
+  
+ main .card .body .item { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+ } 
+  
+ main .card .body .item span { 
+  font-size: 12px; 
+  color: var(--dark-grey); 
+ } 
+  
+ main .card .body .item .value { 
+  font-size: 16px; 
+  font-weight: 700; 
+  color: var(--dark); 
+ } 
+  
+ main .card .foot { 
+  display: flex; 
+  align-items: center; 
+  justify-content: flex-start; 
+  grid-gap: 10px; 
+ } 
+  
+ main .card .foot .btn { 
+  padding: 8px 12px; 
+  border-radius: 5px; 
+  font-weight: 600; 
+  background: var(--blue); 
+  color: var(--light); 
+  transition: all .3s ease; 
+ } 
+  
+ main .card .foot .btn:hover { 
+  background: var(--dark-blue); 
+ } 
+  
+ main .card .foot .divider { 
+  width: 1px; 
+  height: 16px; 
+  background: var(--dark-grey); 
+ } 
+ /* General Reset */ 
+ * { 
+  font-family: 'Open Sans', sans-serif; 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+ } 
+  
+ :root { 
+  --grey: #F1F0F6; 
+  --dark-grey: #8D8D8D; 
+  --light: #fff; 
+  --dark: #000; 
+  --green: #81D43A; 
+  --light-green: #E3FFCB; 
+  --blue: #1775F1; 
+  --light-blue: #D0E4FF; 
+  --dark-blue: #0C5FCD; 
+  --red: #FC3B56; 
+ } 
+  
+ html { 
+  overflow-x: hidden; 
+ } 
+  
+ body { 
+  background:var(--grey); 
+  overflow-x: hidden; 
+ } 
+ 
+  
+ /* SIDEBAR */ 
+ #sidebar { 
+  position: fixed; 
+  max-width: 260px; 
+  width: 100%; 
+  background: var(--light); 
+  top: 0; 
+  left: 0; 
+  height: 100%; 
+  overflow-y: auto; 
+  scrollbar-width: none; 
+  transition: all .3s ease; 
+  z-index: 200; 
+ } 
+  
+ #sidebar.hide { 
+  max-width: 60px; 
+ } 
+  
+ #sidebar.hide:hover { 
+  max-width: 260px; 
+ } 
+  
+ #sidebar::-webkit-scrollbar { 
+  display: none; 
+ } 
+  
+ #sidebar .brand { 
+  font-size: 24px; 
+  display: flex; 
+  align-items: center; 
+  height: 64px; 
+  font-weight: 700; 
+  color: var(--blue); 
+  position: sticky; 
+  top: 0; 
+  left: 0; 
+  z-index: 100; 
+  background: var(--light); 
+  transition: all .3s ease; 
+  padding: 0 6px; 
+ } 
+  
+ #sidebar .icon { 
+  min-width: 48px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  margin-right: 6px; 
+ } 
+  
+ #sidebar .side-menu { 
+  margin: 36px 0; 
+  padding: 0 20px; 
+  transition: all .3s ease; 
+ } 
+  
+ #sidebar.hide .side-menu { 
+  padding: 0 6px; 
+ } 
+  
+ #sidebar .side-menu a { 
+  display: flex; 
+  align-items: center; 
+  font-size: 14px; 
+  color: var(--dark); 
+  padding: 12px 16px 12px 0; 
+  transition: all .3s ease; 
+  border-radius: 10px; 
+  margin: 4px 0; 
+  white-space: nowrap; 
+ } 
+  
+ #sidebar .side-menu > li > a:hover { 
+  background: var(--grey); 
+ } 
+  
+ #sidebar .side-menu > li > a.active { 
+  background: var(--blue); 
+  color: var(--light); 
+ } 
+  
+ #sidebar .divider { 
+  margin-top: 24px; 
+  font-size: 12px; 
+  text-transform: uppercase; 
+  font-weight: 700; 
+  color: var(--dark-grey); 
+ } 
+  
+ /* Content */ 
+ #content { 
+  position: relative; 
+  width: calc(100% - 260px); 
+  left: 260px; 
+  transition: all .3s ease; 
+ } 
+  
+ #sidebar.hide + #content { 
+  width: calc(100% - 60px); 
+  left: 60px; 
+ } 
+  
+ /* Navbar */ 
+ nav { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  padding: 12px 16px; 
+  background: var(--light); 
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); 
+ } 
+  
+ nav .toggle-sidebar { 
+  font-size: 30px; 
+  color: var(--dark); 
+  cursor: pointer; 
+ } 
+  
+ nav form { 
+  width: 300px; 
+  position: relative; 
+ } 
+  
+ nav form input { 
+  width: 100%; 
+  border: 1px solid var(--dark-grey); 
+  border-radius: 20px; 
+  padding: 8px 16px; 
+  font-size: 14px; 
+ } 
+  
+ nav .nav-link { 
+  font-size: 20px; 
+  color: var(--dark); 
+  position: relative; 
+ } 
+  
+ nav .nav-link .badge { 
+  position: absolute; 
+  top: -6px; 
+  right: -6px; 
+  background: var(--red); 
+  color: var(--light); 
+  font-size: 10px; 
+  padding: 2px 5px; 
+  border-radius: 50%; 
+ } 
+  
+ nav .profile { 
+  display: flex; 
+  align-items: center; 
+ } 
+  
+ nav .profile img { 
+  width: 40px; 
+  height: 40px; 
+  object-fit: cover; 
+  border-radius: 50%; 
+  margin-right: 12px; 
+ } 
+  
+ nav .profile .profile-link { 
+  display: none; 
+  position: absolute; 
+  background: var(--light); 
+  top: 40px; 
+  right: 0; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  padding: 8px; 
+ } 
+  
+ nav .profile:hover .profile-link { 
+  display: block; 
+ } 
+  
+ nav .profile-link a { 
+  color: var(--dark); 
+  font-size: 14px; 
+  display: block; 
+  padding: 8px; 
+  transition: all .3s ease; 
+ } 
+  
+ nav .profile-link a:hover { 
+  background: var(--light-blue); 
+ } 
+  
+ /* Card */ 
+ .card { 
+  background: var(--light); 
+  border-radius: 10px; 
+  padding: 16px; 
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+  margin: 16px 0; 
+ } 
+  
+ .card .head { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+ } 
+  
+ .card .head h2 { 
+  font-size: 18px; 
+  font-weight: 600; 
+  color: var(--dark); 
+ } 
+  
+ .card .head p { 
+  font-size: 14px; 
+  color: var(--dark-grey); 
+ } 
+  
+ .card .head .icon { 
+  font-size: 30px; 
+  color: var(--blue); 
+ } 
+  
+ .card .progress { 
+  width: 100%; 
+  height: 6px; 
+  background: var(--light-grey); 
+  border-radius: 4px; 
+  margin: 8px 0; 
+ } 
+  
+ .card .progress::after { 
+  content: ''; 
+  display: block; 
+  height: 6px; 
+  border-radius: 4px; 
+  background: var(--green); 
+  width: 90%; /* Example for 90% active */ 
+ } 
+  
+ .card .label { 
+  font-size: 14px; 
+  color: var(--dark); 
+  font-weight: 600; 
+ } 
+  
+ /* Breadcrumbs */ 
+ .breadcrumbs { 
+  display: flex; 
+  margin-bottom: 16px; 
+  font-size: 14px; 
+ } 
+  
+ .breadcrumbs li { 
+  margin-right: 8px; 
+ } 
+  
+ .breadcrumbsumbs .divider { 
+  margin-left: 8px; 
+  color: var(--dark-grey); 
+ } 
+  
+ @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap'); 
+  
+ * { 
+   font-family: 'Open Sans', sans-serif; 
+   margin: 0; 
+   padding: 0; 
+   box-sizing: border-box; 
+ } 
+  
+ :root { 
+   --grey: #F1F0F6; 
+   --dark-grey: #8D8D8D; 
+   --light: #fff; 
+   --dark: #000; 
+   --green: #81D43A; 
+   --light-green: #E3FFCB; 
+   --blue: #1775F1; 
+   --light-blue: #D0E4FF; 
+   --dark-blue: #0C5FCD; 
+   --red: #FC3B56; 
+ } 
+  
+ html { 
+   overflow-x: hidden; 
+ } 
+  
+ body { 
+   background: var(--grey); 
+   overflow-x: hidden; 
+ } 
+  
+ a { 
+   text-decoration: none; 
+ } 
+  
+ li { 
+   list-style: none; 
+ } 
+  
+  
+ /* SIDEBAR */ 
+ #sidebar { 
+   position: fixed; 
+   max-width: 260px; 
+   width: 100%; 
+   background: var(--light); 
+   top: 0; 
+   left: 0; 
+   height: 100%; 
+   overflow-y: auto; 
+   scrollbar-width: none; 
+   transition: all .3s ease; 
+   z-index: 200; 
+ } 
+  
+ #sidebar.hide { 
+   max-width: 60px; 
+ } 
+  
+ #sidebar.hide:hover { 
+   max-width: 260px; 
+ } 
+  
+ #sidebar::-webkit-scrollbar { 
+   display: none; 
+ } 
+  
+ #sidebar .brand { 
+   font-size: 24px; 
+   display: flex; 
+   align-items: center; 
+   height: 64px; 
+   font-weight: 700; 
+   color: var(--blue); 
+   position: sticky; 
+   top: 0; 
+   left: 0; 
+   z-index: 100; 
+   background: var(--light); 
+   padding: 0 6px; 
+   transition: all .3s ease; 
+ } 
+  
+ #sidebar .icon { 
+   min-width: 48px; 
+   display: flex; 
+   justify-content: center; 
+   align-items: center; 
+   margin-right: 6px; 
+ } 
+  
+ #sidebar .side-menu { 
+   margin: 36px 0; 
+   padding: 0 20px; 
+   transition: all .3s ease; 
+ } 
+  
+ #sidebar.hide .side-menu { 
+   padding: 0 6px; 
+ } 
+  
+ #sidebar .side-menu a { 
+   display: flex; 
+   align-items: center; 
+   font-size: 14px; 
+   color: var(--dark); 
+   padding: 12px 16px 12px 0; 
+   transition: all .3s ease; 
+   border-radius: 10px; 
+   margin: 4px 0; 
+   white-space: nowrap; 
+ } 
+  
+ #sidebar .side-menu > li > a:hover { 
+   background: var(--grey); 
+ } 
+  
+ #sidebar .side-menu > li > a.active .icon-right { 
+   transform: rotateZ(90deg); 
+ } 
+  
+ #sidebar .side-menu > li > a.active, 
+ #sidebar .side-menu > li > a.active:hover { 
+   background: var(--blue); 
+   color: var(--light); 
+ } 
+  
+ #sidebar .divider { 
+   margin-top: 24px; 
+   font-size: 12px; 
+   text-transform: uppercase; 
+   font-weight: 700; 
+   color: var(--dark-grey); 
+   transition: all .3s ease; 
+   white-space: nowrap; 
+ } 
+  
+ #sidebar.hide:hover .divider { 
+   text-align: left; 
+ } 
+  
+ #sidebar.hide .divider { 
+   text-align: center; 
+ } 
+  
+ #sidebar .side-dropdown { 
+   padding-left: 54px; 
+   max-height: 0; 
+   overflow-y: hidden; 
+   transition: all .15s ease; 
+ } 
+  
+ #sidebar .side-dropdown.show { 
+   max-height: 1000px; 
+ } 
+  
+ #sidebar .side-dropdown a:hover { 
+   color: var(--blue); 
+ } 
+  
+ #sidebar .ads { 
+   width: 100%; 
+   padding: 20px; 
+ } 
+  
+ #sidebar.hide .ads { 
+   display: none; 
+ } 
+  
+ #sidebar.hide:hover .ads { 
+   display: block; 
+ } 
+  
+ #sidebar .ads .wrapper { 
+   background: var(--grey); 
+   padding: 20px; 
+   border-radius: 10px; 
+ } 
+  
+ #sidebar .btn-upgrade { 
+   font-size: 14px; 
+   display: flex; 
+   justify-content: center; 
+   align-items: center; 
+   padding: 12px 0; 
+   color: var(--light); 
+   background: var(--blue); 
+   transition: all .3s ease; 
+   border-radius: 5px; 
+   font-weight: 600; 
+   margin-bottom: 12px; 
+ } 
+  
+ #sidebar .btn-upgrade:hover { 
+   background: var(--dark-blue); 
+ } 
+  
+ #sidebar .ads .wrapper p { 
+   font-size: 12px; 
+   color: var(--dark-grey); 
+   text-align: center; 
+ } 
+  
+ #sidebar .ads .wrapper p span { 
+   font-weight: 700; 
+ } 
+ /* SIDEBAR */ 
+  
+  
+ /* CONTENT */ 
+ #content { 
+   position: relative; 
+   width: calc(100% - 260px); 
+   left: 260px; 
+   transition: all .3s ease; 
+ } 
+  
+ #sidebar.hide + #content { 
+   width: calc(100% - 60px); 
+   left: 60px; 
+ } 
+  
+ /* NAVBAR */ 
+ nav { 
+   background: var(--light); 
+   height: 64px; 
+   padding: 0 20px; 
+   display: flex; 
+   align-items: center; 
+   grid-gap: 28px; 
+   position: sticky; 
+   top: 0; 
+   left: 0; 
+   z-index: 100; 
+ } 
+  
+ nav .toggle-sidebar { 
+   font-size: 18px; 
+   cursor: pointer; 
+ } 
+  
+ nav form { 
+   max-width: 400px; 
+   width: 100%; 
+   margin-right: auto;} 
+  
+ nav .form-group { 
+   position: relative; 
+ } 
+  
+ nav .form-group input { 
+   width: 100%; 
+   background: var(--grey); 
+   border-radius: 5px; 
+   border: none; 
+   outline: none; 
+   padding: 10px 36px 10px 16px; 
+   transition: all .3s ease; 
+ } 
+  
+ nav .form-group input:focus { 
+   box-shadow: 0 0 0 1px var(--blue), 0 0 0 4px var(--light-blue); 
+ } 
+  
+ nav .form-group .icon { 
+   position: absolute; 
+   top: 50%; 
+   transform: translateY(-50%); 
+   right: 16px; 
+   color: var(--dark-grey); 
+ } 
+  
+ nav .nav-link { 
+   position: relative; 
+ } 
+  
+ nav .nav-link .icon { 
+   font-size: 18px; 
+   color: var(--dark); 
+ } 
+  
+ nav .nav-link .badge { 
+   position: absolute; 
+   top: -12px; 
+   right: -12px; 
+   width: 20px; 
+   height: 20px; 
+   border-radius: 50%; 
+   border: 2px solid var(--light); 
+   background: var(--red); 
+   display: flex; 
+   justify-content: center; 
+   align-items: center; 
+   color: var(--light); 
+   font-size: 10px; 
+   font-weight: 700; 
+ } 
+  
+ nav .divider { 
+   width: 1px; 
+   background: var(--grey); 
+   height: 12px; 
+   display: block; 
+ } 
+  
+ nav .profile { 
+   position: relative; 
+ } 
+  
+ nav .profile img { 
+   width: 36px; 
+   height: 36px; 
+   border-radius: 50%; 
+   object-fit: cover; 
+   cursor: pointer; 
+ } 
+  
+ nav .profile .profile-link { 
+   position: absolute; 
+   top: calc(100% + 10px); 
+   right: 0; 
+   background: var(--light); 
+   padding: 10px 0; 
+   box-shadow: 4px 4px 16px rgba(0, 0, 0, .1); 
+   border-radius: 10px; 
+   width: 160px; 
+   opacity: 0; 
+   pointer-events: none; 
+   transition: all .3s ease; 
+ } 
+  
+ nav .profile .profile-link.show { 
+   opacity: 1; 
+   pointer-events: visible; 
+   top: 100%; 
+ } 
+  
+ nav .profile .profile-link a { 
+   padding: 10px 16px; 
+   display: flex; 
+   grid-gap: 10px; 
+   font-size: 14px; 
+   color: var(--dark); 
+   align-items: center; 
+   transition: all .3s ease; 
+ } 
+  
+ nav .profile .profile-link a:hover { 
+   background: var(--grey); 
+ } 
+ /* NAVBAR */ 
+  
+  
+ /* MAIN */ 
+ main { 
+   width: 100%; 
+   padding: 24px 20px 20px 20px; 
+ } 
+  
+ main .title { 
+   font-size: 28px; 
+   font-weight: 600; 
+   margin-bottom: 10px; 
+ } 
+  
+ main .breadcrumbs { 
+   display: flex; 
+   grid-gap: 6px; 
+ } 
+  
+ main .breadcrumbs li, 
+ main .breadcrumbs li a { 
+   font-size: 14px; 
+ } 
+  
+ main .breadcrumbs li a { 
+   color: var(--blue); 
+ } 
+  
+ main .breadcrumbs li a.active, 
+ main .breadcrumbs li.divider { 
+   color: var(--dark-grey); 
+   pointer-events: none; 
+ } 
+  
+ main .info-data { 
+   margin-top: 36px; 
+   display: grid; 
+   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+   grid-gap: 20px; 
+ } 
+  
+ main .info-data .card { 
+   background: var(--light); 
+   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05); 
+   border-radius: 10px; 
+   padding: 20px; 
+ } 
+  
+ main .info-data .card .title { 
+   font-size: 18px; 
+   font-weight: 600; 
+   margin-bottom: 10px; 
+ } 
+  
+ main .info-data .card .value { 
+   font-size: 24px; 
+   font-weight: 700; 
+   margin-bottom: 10px; 
+ } 
+  
+ main .info-data .card .icon { 
+   font-size: 20px; 
+   color: var(--blue); 
+   margin-right: 12px; 
+ } 
+  
+ main .info-data .card .btn { 
+   text-align: right; 
+ } 
+  
+ main .info-data .card .btn .btn-link { 
+   color: var(--blue); 
+ } 
+  
+ main .table-container { 
+   margin-top: 36px; 
+ } 
+  
+ main .table-container table { 
+   width: 100%; 
+   border-radius: 8px; 
+   border-collapse: collapse; 
+   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05); 
+ } 
+  
+ main .table-container th, 
+ main .table-container td { 
+   padding: 12px; 
+   font-size: 14px; 
+   text-align: left; 
+ } 
+  
+ main .table-container th { 
+   background: var(--light); 
+   font-weight: 600; 
+ } 
+  
+ main .table-container tr:hover { 
+   background: var(--light-grey); 
+ } 
+  
+ main .table-container .action { 
+   font-size: 18px; 
+   color: var(--blue); 
+   cursor: pointer; 
+ } 
+  
+ main .table-container .action:hover { 
+   color: var(--dark-blue); 
+ } 
+ /* General page styling */
+/* General page styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-container {
+    width: 90%;
+    margin: 20px auto;
+}
+
+/* Title and breadcrumb styling */
+.title {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+}
+
+.breadcrumbs {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.breadcrumbs li {
+    margin-right: 5px;
+    font-size: 1rem;
+}
+
+.breadcrumbs li a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.breadcrumbs .divider {
+    color: #999;
+}
+
+.breadcrumbs .active {
+    font-weight: bold;
+}
+
+/* Decrypted messages section */
+.content-data {
+    margin-top: 30px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.head h3 {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+/* Message grid and individual cards */
+.message-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.message-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    /* transition: transform 0.3s ease-in-out; */
+}
+
+.message-card:hover {
+    transform: scale(1.05);
+}
+
+.message-header {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.message-body {
+    font-size: 1rem;
+    color: #333;
+}
+
+.message-card p {
+    margin: 10px 0;
+}
+
+.message-card strong {
+    color: #4CAF50;
+}
+
+/* Styling for when no messages are received */
+.no-messages {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #999;
+}
+
+
+ /* MAIN */
+</style>
+
+<body>
+    <!-- LOGIN FORM -->
+    <section id="login-section">
+        <div class="login-container">
+            <h2>Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <p id="error-message" style="color: red; display: none;">Invalid credentials. Please try again.</p>
+        </div>
+    </section>
+
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <a href="#" class="brand"><i class='bx bxs-smile icon'></i>SecuSwitch</a>
+        <ul class="side-menu">
+            <li><a href="#" class="active"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
+            <li class="divider" data-text="main">Main</li>
+            <li>
+                <a href="#"><i class='bx bxs-inbox icon'></i> Network Security <i class='bx bx-chevron-right icon-right'></i></a>
+                <ul class="side-dropdown">
+                    <li><a href="#">Encryption Status</a></li>
+                    <li><a href="#">Key Management</a></li>
+                    <li><a href="#">Legacy Integration</a></li>
+                </ul>
+            </li>
+            <li><a href="#"><i class='bx bxs-chart icon'></i> Charts</a></li>
+            <li><a href="#"><i class='bx bxs-widget icon'></i> Widgets</a></li>
+            <li class="divider" data-text="system settings">System Settings</li>
+            <li><a href="#"><i class='bx bxs-cog'></i> Configuration</a></li>
+        </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu toggle-sidebar'></i>
+            <form action="#">
+                <div class="form-group">
+                    <input type="text" placeholder="Search...">
+                    <i class='bx bx-search icon'></i>
+                </div>
+            </form>
+            <a href="#" class="nav-link">
+                <i class='bx bxs-bell icon'></i>
+                <span class="badge" style="display:none;">0</span> <!-- Badge to display message count -->
+            </a>
+            <a href="#" class="nav-link">
+                <i class='bx bxs-message-square-dots icon'></i>
+                <span class="badge">8</span>
+            </a>
+            <span class="divider"></span>
+            <div class="profile">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
+                <ul class="profile-link">
+                    <li><a href="#"><i class='bx bxs-user-circle icon'></i> Profile</a></li>
+                    <li><a href="#"><i class='bx bxs-cog'></i> Settings</a></li>
+                    <li><a href="#"><i class='bx bxs-log-out-circle'></i> Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- MAIN CONTENT -->
+        <main>
+            <div class="dashboard-container">
+                <h1 class="title">Dashboard</h1>
+                <ul class="breadcrumbs">
+                    <li><a href="#">Home</a></li>
+                    <li class="divider">/</li>
+                    <li><a href="#" class="active">Dashboard</a></li>
+                </ul>
+        
+                <!-- Decrypted Messages Section -->
+                <div class="content-data">
+                    <div class="head">
+                        <h3>Decrypted Messages</h3>
+                    </div>
+                    <div id="messages-container">
+                        {% if message_log %}
+                            <div class="message-grid">
+                                {% for message in message_log %}
+                                <div class="message-card">
+                                    <div class="message-header">
+                                        <strong>From: </strong>{{ message.client_ip }} |
+                                        <strong>Received At: </strong>{{ message.received_time }}
+                                    </div>
+                                    <div class="message-body">
+                                        <p><strong>Decrypted Message:</strong></p>
+                                        <p>{{ message.decrypted_message }}</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p>No messages received yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-data">
+                <div class="head">
+                    <h3>Messages Over Time</h3>
+                </div>
+                <div id="message-chart"></div>
+            </div>
+
+            <!-- System Performance Widgets -->
+            <div class="content-data">
+                <div class="head">
+                    <h3>System Performance</h3>
+                </div>
+                <div class="widget">
+                    <div class="widget-title">CPU Usage</div>
+                    <div class="widget-status">75%</div>
+                </div>
+                <div class="widget">
+                    <div class="widget-title">Memory Usage</div>
+                    <div class="widget-status">60%</div>
+                </div>
+                <div class="widget">
+                    <div class="widget-title">Disk Usage</div>
+                    <div class="widget-status">50%</div>
+                </div>
+            </div>
+        </div>
+        <!-- MAIN CONTENT -->
+    </section>
+    <!-- CONTENT -->
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="yashswi.js"></script>
+    <script>
+        // Login Form & Dashboard Logic
+        document.addEventListener("DOMContentLoaded", () => {
+            const loginSection = document.getElementById('login-section');
+            const sidebar = document.getElementById('sidebar');
+            const contentSection = document.getElementById('content');
+            const loginForm = document.getElementById('login-form');
+            const errorMessage = document.getElementById('error-message');
+
+            // Mock credentials
+            const validUsername = 'admin';
+            const validPassword = 'password';
+
+            // Check if user is already logged in
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                showDashboard();
+            } else {
+                showLogin();
+            }
+
+            loginForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                if (username === validUsername && password === validPassword) {
+                    localStorage.setItem('isLoggedIn', 'true');
+                    showDashboard();
+                } else {
+                    errorMessage.style.display = 'block';
+                }
+            });
+
+            function showLogin() {
+                loginSection.style.display = 'block';
+                sidebar.style.display = 'none';
+                contentSection.style.display = 'none';
+            }
+
+            function showDashboard() {
+                loginSection.style.display = 'none';
+                sidebar.style.display = 'block';
+                contentSection.style.display = 'block';
+            }
+        });
+
+        // Adding AJAX to dynamically fetch messages every few seconds
+        function fetchMessages() {
+    fetch('/messages')
+        .then(response => response.json())
+        .then(data => {
+            const messagesContainer = document.getElementById('messages-container');
+            const bellIcon = document.querySelector('.bx.bxs-bell'); // The bell icon
+            const badge = bellIcon.nextElementSibling; // The badge element next to the bell icon
+            let newMessageCount = 0;
+
+            // Clear previous messages to avoid duplication
+            messagesContainer.innerHTML = ''; 
+
+            if (data.length > 0) {
+                // Loop through the incoming messages
+                data.forEach(message => {
+                    // Create a new message item and append it to the container
+                    const messageItem = document.createElement('div');
+                    messageItem.classList.add('message-item');
+                    messageItem.innerHTML = `
+                        <div class="message-header">
+                            <strong>From: </strong>${message.client_ip} |
+                            <strong>Received At: </strong>${message.received_time}
+                        </div>
+                        <div class="message-body">
+                            <p><strong>Decrypted Message:</strong></p>
+                            <p>${message.decrypted_message}</p>
+                        </div>`;
+                    messagesContainer.appendChild(messageItem);
+                    newMessageCount++;
+                });
+
+                // Update the bell icon's badge with the new message count
+                if (newMessageCount > 0) {
+                    const currentBadgeCount = parseInt(badge.textContent) || 0;
+                    badge.textContent = currentBadgeCount + newMessageCount; // Increment the badge count
+                    badge.style.display = 'inline'; // Show the badge if there are new messages
+                }
+            } else {
+                messagesContainer.innerHTML = '<p>No messages received yet.</p>';
+                badge.style.display = 'none'; // Hide badge if no new messages
+            }
+        })
+        .catch(error => console.error('Error fetching messages:', error));
+}
+
+function updateMessageChart(messages) {
+            const messageCount = messages.length;
+
+            const options = {
+                series: [{
+                    name: 'Messages',
+                    data: [messageCount] // Sample data: Update with actual message count over time
+                }],
+                chart: {
+                    height: 350,
+                    type: 'line'
+                },
+                xaxis: {
+                    categories: ['Recent Messages']
+                }
+            };
+
+            var chart = new ApexCharts(document.querySelector("#message-chart"), options);
+            chart.render();
+        }
+
+        fetchMessages();
+        // Call fetchMessages every 5 seconds to get new messages
+        // setInterval(fetchMessages, 15000);
+    </script>
+</body>
+
+</html>
+

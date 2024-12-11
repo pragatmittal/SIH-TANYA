@@ -1,11 +1,9 @@
 import json
 from encryption import encrypt_data, decrypt_data
 from key_management import generate_key, save_key, load_key
-
 # Load configuration
 with open("config.json", "r") as config_file:
     config = json.load(config_file)
-
 # Generate and save a key if not already present
 try:
     key = load_key(config["key_file"])
